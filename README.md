@@ -64,7 +64,7 @@ flask run --host=0.0.0.0 --port=5000
 Buka browser dan akses:
 
 - **Local**: http://localhost:5000
-- **Network**: http://192.168.x.x:5000 (dapat diakses dari device lain di jaringan yang sama)
+- **Network**: https://belajar-sql.vercel.app/
 
 ## Struktur Project
 
