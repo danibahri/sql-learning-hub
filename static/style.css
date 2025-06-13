@@ -228,22 +228,176 @@
   box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
 }
 
-/* Hero section enhancements */
-.hero-section {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  position: relative;
-  overflow: hidden;
+/* Enhanced navbar and GitHub button styles */
+.navbar {
+  transition: all 0.3s ease;
 }
 
-.hero-section::before {
+.navbar-brand {
+  transition: color 0.3s ease;
+}
+
+.navbar-brand:hover {
+  color: var(--primary-color) !important;
+}
+
+/* GitHub button enhancements */
+.btn-outline-dark {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-outline-dark::before {
   content: "";
   position: absolute;
   top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="20" cy="20" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="80" cy="80" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="40" cy="60" r="1" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
-  opacity: 0.1;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transition: left 0.5s;
+}
+
+.btn-outline-dark:hover::before {
+  left: 100%;
+}
+
+.btn-outline-dark:hover {
+  box-shadow: 0 4px 12px rgba(73, 80, 87, 0.3);
+}
+
+/* Enhanced responsive navbar */
+@media (max-width: 991.98px) {
+  .navbar-collapse {
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(10px);
+    padding: 1.5rem;
+    margin-top: 0.5rem;
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .navbar-nav {
+    margin-bottom: 1.5rem;
+  }
+
+  .navbar-nav .nav-link {
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+  }
+
+  .navbar-nav .nav-link:hover {
+    background-color: var(--primary-color);
+    color: white !important;
+    transform: translateX(5px);
+  }
+}
+
+@media (max-width: 768px) {
+  /* Mobile-specific adjustments */
+  .d-flex.align-items-center {
+    flex-direction: column;
+    align-items: stretch !important;
+    gap: 1rem !important;
+  }
+
+  .d-flex.align-items-center form {
+    margin: 0 !important;
+    order: 1;
+  }
+
+  .btn-outline-dark {
+    justify-content: center;
+    order: 2;
+    padding: 0.75rem 1rem;
+  }
+
+  /* Search form mobile optimizations */
+  .form-control[name="q"] {
+    min-width: auto !important;
+    width: 100%;
+    font-size: 16px; /* Prevents zoom on iOS */
+  }
+
+  .btn[type="submit"] {
+    min-width: 48px;
+    height: 48px;
+  }
+}
+
+@media (max-width: 576px) {
+  /* Extra small screens */
+  .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .navbar-brand {
+    font-size: 1.1rem;
+  }
+
+  .d-flex.me-2 {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .d-flex.me-2 .form-control {
+    margin-bottom: 0;
+    margin-right: 0 !important;
+  }
+
+  .btn-outline-dark {
+    white-space: nowrap;
+  }
+}
+
+/* GitHub icon animation */
+.fab.fa-github {
+  transition: transform 0.3s ease;
+}
+
+.btn-outline-dark:hover .fab.fa-github {
+  transform: rotate(360deg);
+}
+
+/* Improved dropdown menu */
+.dropdown-menu {
+  border: none;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+  border-radius: 12px;
+  padding: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.dropdown-item {
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  transition: all 0.2s ease;
+}
+
+.dropdown-item:hover {
+  background: linear-gradient(
+    135deg,
+    var(--primary-color),
+    var(--secondary-color)
+  );
+  color: white;
+  transform: translateX(5px);
+}
+
+/* Navbar shadow on scroll */
+.navbar.scrolled {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  background-color: rgba(255, 255, 255, 0.95) !important;
+  backdrop-filter: blur(10px);
 }
 
 /* Responsive enhancements */

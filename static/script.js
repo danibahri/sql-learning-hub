@@ -385,3 +385,97 @@ function loadTheme() {
 
 // Initialize theme on load
 loadTheme();
+
+// Enhanced navbar functionality
+function initializeNavbarEnhancements() {
+  const navbar = document.querySelector(".navbar");
+
+  // Add scroll effect to navbar
+  window.addEventListener("scroll", function () {
+    if (window.scrollY > 50) {
+      navbar.classList.add("scrolled");
+    } else {
+      navbar.classList.remove("scrolled");
+    }
+  });
+
+  // Auto-collapse navbar on mobile when clicking links
+  const navbarCollapse = document.querySelector(".navbar-collapse");
+  const navLinks = document.querySelectorAll(".navbar-nav .nav-link");
+
+  navLinks.forEach((link) => {
+    link.addEventListener("click", () => {
+      if (window.innerWidth < 992) {
+        const bsCollapse = new bootstrap.Collapse(navbarCollapse, {
+          toggle: false,
+        });
+        bsCollapse.hide();
+      }
+    });
+  });
+
+  // Enhanced mobile search experience
+  const searchInput = document.querySelector('input[name="q"]');
+  if (searchInput) {
+    // Prevent zoom on iOS
+    searchInput.addEventListener("focus", function () {
+      if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
+        this.style.fontSize = "16px";
+      }
+    });
+
+    // Clear search on escape
+    searchInput.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") {
+        this.blur();
+        this.value = "";
+      }
+    });
+  }
+}
+
+// GitHub button enhancements
+function initializeGitHubButton() {
+  const githubBtn = document.querySelector('.btn-outline-dark[href*="github"]');
+
+  if (githubBtn) {
+    // Add click analytics (optional)
+    githubBtn.addEventListener("click", function () {
+      console.log("GitHub profile visited");
+    });
+
+    // Add keyboard accessibility
+    githubBtn.addEventListener("keydown", function (e) {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        this.click();
+      }
+    });
+  }
+}
+
+// Initialize enhanced features when DOM is loaded
+document.addEventListener("DOMContentLoaded", function () {
+  initializeNavbarEnhancements();
+  initializeGitHubButton();
+});
+
+// Handle window resize for responsive adjustments
+window.addEventListener("resize", function () {
+  // Close navbar collapse on desktop
+  if (window.innerWidth >= 992) {
+    const navbarCollapse = document.querySelector(".navbar-collapse");
+    const bsCollapse = bootstrap.Collapse.getInstance(navbarCollapse);
+    if (bsCollapse) {
+      bsCollapse.hide();
+    }
+  }
+});
+
+// Smooth scroll for better UX
+function smoothScrollTo(element) {
+  element.scrollIntoView({
+    behavior: "smooth",
+    block: "start",
+  });
+}

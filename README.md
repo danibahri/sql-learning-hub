@@ -10,6 +10,7 @@ Platform pembelajaran SQL lengkap dengan materi terstruktur, contoh kode, dan pe
 - **Pencarian Cepat**: Fitur pencarian untuk menemukan materi dengan mudah
 - **Responsive Design**: Dapat diakses dari desktop, tablet, dan mobile
 - **Syntax Highlighting**: Kode SQL dengan highlighting yang menarik
+- **GitHub Integration**: Link ke profil GitHub developer dengan responsive design
 
 ## Struktur Materi
 

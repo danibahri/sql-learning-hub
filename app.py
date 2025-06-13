@@ -458,5 +458,10 @@ def search():
 def inject_sections():
     return dict(sections=sql_content)
 
+# Vercel entry point
+def handler(request):
+    return app(request.environ, lambda *args: None)
+
+# For local development
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)
