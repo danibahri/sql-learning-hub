@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}Pembelajaran SQL{% endblock %}</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="{{ url_for('static', filename='style.css') }}"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f8f9fa;
+      }
+      .navbar-brand {
+        font-weight: bold;
+        color: #2c3e50 !important;
+      }
+      .hero-section {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 4rem 0;
+        text-align: center;
+      }
+      .section-card {
+        transition: transform 0.3s ease;
+        border: none;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+      .section-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+      }
+      .code-block {
+        background-color: #2d3748;
+        border-radius: 8px;
+        padding: 1rem;
+        margin: 1rem 0;
+      }
+      pre {
+        margin: 0;
+        white-space: pre-wrap;
+      }
+      .explanation-list {
+        background-color: #e8f5e8;
+        border-left: 4px solid #28a745;
+        padding: 1rem;
+        margin: 1rem 0;
+      }
+      .search-box {
+        max-width: 500px;
+        margin: 0 auto;
+      }
+      .topic-nav {
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        padding: 1rem;
+        margin-bottom: 2rem;
+      }
+      .footer {
+        background-color: #2c3e50;
+        color: white;
+        padding: 2rem 0;
+        margin-top: 3rem;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+      <div class="container">
+        <a class="navbar-brand" href="/">
+          <i class="fas fa-database"></i> SQL Learning Hub
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav me-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="/">Home</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                id="navbarDropdown"
+                role="button"
+                data-bs-toggle="dropdown"
+              >
+                Materi
+              </a>
+              <ul class="dropdown-menu">
+                {% for section_id, section in sections.items() %}
+                <li>
+                  <a class="dropdown-item" href="/section/{{ section_id }}"
+                    >{{ section.title }}</a
+                  >
+                </li>
+                {% endfor %}
+              </ul>
+            </li>
+          </ul>
+          <form class="d-flex" action="/search" method="GET">
+            <input
+              class="form-control me-2"
+              type="search"
+              name="q"
+              placeholder="Cari materi SQL..."
+              aria-label="Search"
+            />
+            <button class="btn btn-outline-primary" type="submit">
+              <i class="fas fa-search"></i>
+            </button>
+          </form>
+        </div>
+      </div>
+    </nav>
+
+    <main>{% block content %}{% endblock %}</main>
+
+    <footer class="footer">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6">
+            <h5><i class="fas fa-database"></i> SQL Learning Hub</h5>
+            <p>
+              Platform pembelajaran SQL lengkap dengan contoh dan penjelasan
+              detail.
+            </p>
+          </div>
+          <div class="col-md-6">
+            <h5>Fitur</h5>
+            <ul class="list-unstyled">
+              <li><i class="fas fa-check"></i> Materi terstruktur</li>
+              <li><i class="fas fa-check"></i> Contoh kode SQL</li>
+              <li><i class="fas fa-check"></i> Penjelasan detail</li>
+              <li><i class="fas fa-check"></i> Pencarian materi</li>
+            </ul>
+          </div>
+        </div>
+        <hr />
+        <div class="text-center">
+          <p>
+            &copy; 2025. Dibuat untuk pembelajaran database oleh kelompok 12.
+          </p>
+        </div>
+      </div>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+  </body>
+</html>

@@ -1,0 +1,171 @@
+{% extends "base.html" %} {% block title %}Pencarian: {{ query }} - SQL Learning
+Hub{% endblock %} {% block content %}
+<div class="container my-5">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="/">Home</a></li>
+      <li class="breadcrumb-item active">Pencarian</li>
+    </ol>
+  </nav>
+
+  <div class="row">
+    <div class="col-lg-8 mx-auto">
+      <div class="card shadow-sm">
+        <div class="card-header bg-info text-white">
+          <h2 class="mb-0"><i class="fas fa-search"></i> Hasil Pencarian</h2>
+        </div>
+        <div class="card-body">
+          {% if query %}
+          <div class="alert alert-info">
+            <i class="fas fa-info-circle"></i>
+            Menampilkan hasil pencarian untuk: <strong>"{{ query }}"</strong>
+          </div>
+
+          <div class="search-box mb-4">
+            <form action="/search" method="GET" class="input-group">
+              <input
+                type="search"
+                name="q"
+                class="form-control"
+                value="{{ query }}"
+                placeholder="Cari materi SQL..."
+              />
+              <button class="btn btn-primary" type="submit">
+                <i class="fas fa-search"></i> Cari
+              </button>
+            </form>
+          </div>
+
+          {% if results %}
+          <p class="text-muted mb-4">Ditemukan {{ results|length }} hasil:</p>
+
+          {% for result in results %}
+          <div class="card mb-3 border-start border-primary border-3">
+            <div class="card-body">
+              <h5 class="card-title">
+                {% if result.type == 'section' %}
+                <i class="fas fa-book text-primary"></i>
+                {% else %}
+                <i class="fas fa-file-alt text-success"></i>
+                {% endif %}
+                <a href="{{ result.url }}" class="text-decoration-none"
+                  >{{ result.title }}</a
+                >
+              </h5>
+              <p class="card-text">{{ result.description }}</p>
+              <div class="d-flex justify-content-between align-items-center">
+                <small class="text-muted">
+                  {% if result.type == 'section' %}
+                  <span class="badge bg-primary">Bagian</span>
+                  {% else %}
+                  <span class="badge bg-success">Topik</span>
+                  {% endif %}
+                </small>
+                <a
+                  href="{{ result.url }}"
+                  class="btn btn-outline-primary btn-sm"
+                >
+                  <i class="fas fa-arrow-right"></i> Buka
+                </a>
+              </div>
+            </div>
+          </div>
+          {% endfor %} {% else %}
+          <div class="text-center py-5">
+            <i class="fas fa-search fa-3x text-muted mb-3"></i>
+            <h4>Tidak ada hasil ditemukan</h4>
+            <p class="text-muted">
+              Coba gunakan kata kunci yang berbeda atau lebih umum.
+            </p>
+
+            <div class="mt-4">
+              <h6>Saran pencarian:</h6>
+              <div class="d-flex flex-wrap gap-2 justify-content-center">
+                <a
+                  href="/search?q=select"
+                  class="btn btn-outline-secondary btn-sm"
+                  >SELECT</a
+                >
+                <a
+                  href="/search?q=join"
+                  class="btn btn-outline-secondary btn-sm"
+                  >JOIN</a
+                >
+                <a
+                  href="/search?q=insert"
+                  class="btn btn-outline-secondary btn-sm"
+                  >INSERT</a
+                >
+                <a
+                  href="/search?q=view"
+                  class="btn btn-outline-secondary btn-sm"
+                  >VIEW</a
+                >
+                <a
+                  href="/search?q=trigger"
+                  class="btn btn-outline-secondary btn-sm"
+                  >TRIGGER</a
+                >
+                <a
+                  href="/search?q=procedure"
+                  class="btn btn-outline-secondary btn-sm"
+                  >PROCEDURE</a
+                >
+              </div>
+            </div>
+          </div>
+          {% endif %} {% else %}
+          <div class="text-center py-5">
+            <i class="fas fa-search fa-3x text-muted mb-3"></i>
+            <h4>Cari Materi SQL</h4>
+            <p class="text-muted">
+              Masukkan kata kunci untuk mencari materi pembelajaran.
+            </p>
+
+            <div class="search-box mt-4">
+              <form action="/search" method="GET" class="input-group">
+                <input
+                  type="search"
+                  name="q"
+                  class="form-control form-control-lg"
+                  placeholder="Cari materi SQL..."
+                />
+                <button class="btn btn-primary btn-lg" type="submit">
+                  <i class="fas fa-search"></i> Cari
+                </button>
+              </form>
+            </div>
+
+            <div class="mt-4">
+              <h6>Contoh pencarian:</h6>
+              <div class="d-flex flex-wrap gap-2 justify-content-center">
+                <a
+                  href="/search?q=select"
+                  class="btn btn-outline-secondary btn-sm"
+                  >SELECT statement</a
+                >
+                <a
+                  href="/search?q=join"
+                  class="btn btn-outline-secondary btn-sm"
+                  >JOIN operations</a
+                >
+                <a
+                  href="/search?q=insert"
+                  class="btn btn-outline-secondary btn-sm"
+                  >INSERT data</a
+                >
+                <a
+                  href="/search?q=view"
+                  class="btn btn-outline-secondary btn-sm"
+                  >Database VIEW</a
+                >
+              </div>
+            </div>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

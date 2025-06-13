@@ -1,0 +1,74 @@
+{% extends "base.html" %} {% block title %}{{ section.title }} - SQL Learning
+Hub{% endblock %} {% block content %}
+<div class="container my-5">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="/">Home</a></li>
+      <li class="breadcrumb-item active">{{ section.title }}</li>
+    </ol>
+  </nav>
+
+  <div class="row">
+    <div class="col-lg-3 mb-4">
+      <div class="topic-nav">
+        <h6 class="text-muted mb-3">
+          <i class="fas fa-list"></i> Daftar Topik
+        </h6>
+        <div class="list-group list-group-flush">
+          {% for topic_id, topic in section.topics.items() %}
+          <a
+            href="/topic/{{ section_id }}/{{ topic_id }}"
+            class="list-group-item list-group-item-action"
+          >
+            <small class="text-muted">{{ topic_id }}</small><br />
+            {{ topic.title }}
+          </a>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-9">
+      <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+          <h2 class="mb-0"><i class="fas fa-book"></i> {{ section.title }}</h2>
+        </div>
+        <div class="card-body">
+          <p class="lead">{{ section.description }}</p>
+
+          <div class="alert alert-info">
+            <i class="fas fa-info-circle"></i>
+            <strong>Tentang bagian ini:</strong>
+            Bagian ini mencakup {{ section.topics|length }} topik pembelajaran
+            yang disusun secara berurutan. Klik pada topik di sebelah kiri untuk
+            mempelajari lebih detail.
+          </div>
+
+          <h4 class="mt-4">Topik yang Akan Dipelajari:</h4>
+          <div class="row">
+            {% for topic_id, topic in section.topics.items() %}
+            <div class="col-md-6 mb-3">
+              <div class="card border-primary">
+                <div class="card-body">
+                  <h6 class="card-title">
+                    <span class="badge bg-primary">{{ topic_id }}</span>
+                    {{ topic.title }}
+                  </h6>
+                  <p class="card-text">{{ topic.description }}</p>
+                  <a
+                    href="/topic/{{ section_id }}/{{ topic_id }}"
+                    class="btn btn-outline-primary btn-sm"
+                  >
+                    <i class="fas fa-arrow-right"></i> Pelajari
+                  </a>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,197 @@
+{% extends "base.html" %} {% block title %}{{ topic.title }} - {{ section.title
+}} - SQL Learning Hub{% endblock %} {% block content %}
+<div class="container my-5">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="/">Home</a></li>
+      <li class="breadcrumb-item">
+        <a href="/section/{{ section_id }}">{{ section.title }}</a>
+      </li>
+      <li class="breadcrumb-item active">{{ topic.title }}</li>
+    </ol>
+  </nav>
+
+  <div class="row">
+    <div class="col-lg-3 mb-4">
+      <div class="topic-nav">
+        <h6 class="text-muted mb-3">
+          <i class="fas fa-list"></i> Topik Lainnya
+        </h6>
+        <div class="list-group list-group-flush">
+          {% for t_id, t in section.topics.items() %}
+          <a
+            href="/topic/{{ section_id }}/{{ t_id }}"
+            class="list-group-item list-group-item-action {% if t_id == topic_id %}active{% endif %}"
+          >
+            <small class="text-muted">{{ t_id }}</small><br />
+            {{ t.title }}
+          </a>
+          {% endfor %}
+        </div>
+      </div>
+
+      <div class="card mt-3">
+        <div class="card-header">
+          <h6 class="mb-0"><i class="fas fa-lightbulb"></i> Tips Belajar</h6>
+        </div>
+        <div class="card-body">
+          <ul class="list-unstyled">
+            <li>
+              <i class="fas fa-check text-success"></i> Baca penjelasan dengan
+              teliti
+            </li>
+            <li>
+              <i class="fas fa-check text-success"></i> Coba jalankan kode SQL
+            </li>
+            <li>
+              <i class="fas fa-check text-success"></i> Modifikasi contoh untuk
+              eksperimen
+            </li>
+            <li>
+              <i class="fas fa-check text-success"></i> Lanjut ke topik
+              berikutnya
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-9">
+      <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+          <h2 class="mb-0">
+            <span class="badge bg-light text-primary me-2">{{ topic_id }}</span>
+            {{ topic.title }}
+          </h2>
+        </div>
+        <div class="card-body">
+          <p class="lead">{{ topic.description }}</p>
+
+          <div class="row">
+            <div class="col-12">
+              <h4><i class="fas fa-code"></i> Contoh Kode SQL</h4>
+              <div class="code-block">
+                <pre><code class="language-sql">{{ topic.code }}</code></pre>
+              </div>
+
+              <div class="d-flex gap-2 mb-3">
+                <button
+                  class="btn btn-outline-primary btn-sm"
+                  onclick="copyCode()"
+                >
+                  <i class="fas fa-copy"></i> Salin Kode
+                </button>
+                <button
+                  class="btn btn-outline-success btn-sm"
+                  onclick="toggleExplanation()"
+                >
+                  <i class="fas fa-lightbulb"></i> Lihat Penjelasan
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div
+            id="explanation"
+            class="explanation-section"
+            style="display: none"
+          >
+            <h4><i class="fas fa-info-circle"></i> Penjelasan Detail</h4>
+            <div class="explanation-list">
+              <ul>
+                {% for point in topic.explanation %}
+                <li>{{ point }}</li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+
+          <div class="alert alert-warning mt-4">
+            <i class="fas fa-exclamation-triangle"></i>
+            <strong>Catatan:</strong>
+            Pastikan Anda memahami konsep ini sebelum melanjutkan ke topik
+            berikutnya. Coba modifikasi kode untuk eksperimen lebih lanjut.
+          </div>
+        </div>
+        <div class="card-footer">
+          <div class="row">
+            <div class="col-6">
+              {# Find previous topic #} {% set prev_topic = none %} {% set
+              topic_list = section.topics.items() | list %} {% for i in
+              range(topic_list | length) %} {% if topic_list[i][0] == topic_id
+              and i > 0 %} {% set prev_topic = topic_list[i-1][0] %} {% endif %}
+              {% endfor %} {% if prev_topic %}
+              <a
+                href="/topic/{{ section_id }}/{{ prev_topic }}"
+                class="btn btn-outline-secondary"
+              >
+                <i class="fas fa-arrow-left"></i> Sebelumnya
+              </a>
+              {% endif %}
+            </div>
+            <div class="col-6 text-end">
+              {# Find next topic #} {% set next_topic = none %} {% set
+              topic_list = section.topics.items() | list %} {% for i in
+              range(topic_list | length) %} {% if topic_list[i][0] == topic_id
+              and i < (topic_list | length - 1) %} {% set next_topic =
+              topic_list[i+1][0] %} {% endif %} {% endfor %} {% if next_topic %}
+              <a
+                href="/topic/{{ section_id }}/{{ next_topic }}"
+                class="btn btn-primary"
+              >
+                Selanjutnya <i class="fas fa-arrow-right"></i>
+              </a>
+              {% else %}
+              <a href="/section/{{ section_id }}" class="btn btn-success">
+                <i class="fas fa-check"></i> Selesai
+              </a>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function copyCode() {
+    const codeElement = document.querySelector("code.language-sql");
+    const text = codeElement.textContent;
+
+    navigator.clipboard.writeText(text).then(function () {
+      const btn = event.target.closest("button");
+      const originalText = btn.innerHTML;
+      btn.innerHTML = '<i class="fas fa-check"></i> Tersalin!';
+      btn.classList.remove("btn-outline-primary");
+      btn.classList.add("btn-success");
+
+      setTimeout(() => {
+        btn.innerHTML = originalText;
+        btn.classList.remove("btn-success");
+        btn.classList.add("btn-outline-primary");
+      }, 2000);
+    });
+  }
+
+  function toggleExplanation() {
+    const explanation = document.getElementById("explanation");
+    const btn = event.target.closest("button");
+
+    if (explanation.style.display === "none") {
+      explanation.style.display = "block";
+      btn.innerHTML = '<i class="fas fa-eye-slash"></i> Sembunyikan Penjelasan';
+    } else {
+      explanation.style.display = "none";
+      btn.innerHTML = '<i class="fas fa-lightbulb"></i> Lihat Penjelasan';
+    }
+  }
+
+  // Auto-show explanation on page load
+  document.addEventListener("DOMContentLoaded", function () {
+    document.getElementById("explanation").style.display = "block";
+    const btn = document.querySelector('button[onclick="toggleExplanation()"]');
+    btn.innerHTML = '<i class="fas fa-eye-slash"></i> Sembunyikan Penjelasan';
+  });
+</script>
+{% endblock %}
